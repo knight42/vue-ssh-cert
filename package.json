@@ -1,0 +1,37 @@
+{
+  "name": "vue-ssh-cert",
+  "version": "1.0.0",
+  "description": "A web frontend for generating OpenSSH Certificates",
+  "main": "dist/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel -d dist src && cp -r ./node_modules/bootstrap/dist/{js,css} ./dist/assets/ && cp ./node_modules/vue/dist/vue.min.js ./dist/assets/js/ && cp ./node_modules/vue-resource/dist/vue-resource.min.js ./dist/assets/js/ && cp ./node_modules/jquery/dist/jquery.min.js ./dist/assets/js/",
+    "start": "node dist/server.js"
+  },
+  "keywords": [],
+  "author": "knight_42 <anonymousknight96@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.0.0-alpha.5",
+    "jquery": "^3.1.1",
+    "koa": "^2.0.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-router": "^7.0.1",
+    "koa-static": "^3.0.0",
+    "vue": "^2.1.8",
+    "vue-resource": "^1.0.3"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ],
+    "plugins": [
+      "add-module-exports"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.18.0"
+  }
+}

@@ -2,7 +2,7 @@
 'use strict'
 import path from 'path'
 import fs from 'fs'
-import { exec } from 'child_process'
+import { spawn } from 'child_process'
 
 import { PRIKEY, PASSPHRASE } from '../config'
 
@@ -21,17 +21,16 @@ function genCert(keypath, identity,
   }
   args.push(keypath)
   return new Promise((ful, rej) => {
-    exec(`ssh-keygen ${args.join(' ')}`, (err, stdout, stderr) => {
-      if (err) {
-        rej(err)
-      } else {
-        const o = path.parse(keypath)
-        const certPath = path.join(o.dir, `${o.name}-cert${o.ext}`)
-        fs.readFile(certPath, 'utf8', function(err, data) {
-          if (err) rej(err)
-          else ful(data)
-        })
-      }
+    const p = spawn('ssh-keygen', args)
+    p.on('error', rej)
+    p.on('close', (code) => {
+      if (code != 0) return rej(code)
+      const o = path.parse(keypath)
+      const certPath = path.join(o.dir, `${o.name}-cert${o.ext}`)
+      fs.readFile(certPath, 'utf8', (err, data) => {
+        if (err) rej(err)
+        else ful(data)
+      })
     })
   })
 }

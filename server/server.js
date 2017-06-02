@@ -36,7 +36,7 @@ router.post('/api/sign', (ctx) => {
   })
   .then(cert => ctx.body = cert)
   .catch(err => {
-    console.error('Unexpected error: ' + err)
+    console.error('Unexpected error: %s', err)
   })
 })
 
